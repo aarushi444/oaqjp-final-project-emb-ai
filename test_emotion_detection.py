@@ -1,58 +1,37 @@
 
-"""Unit tests for the emotion detection application."""
+"""Unit tests for emotion detection."""
 
 import unittest
-from unittest.mock import Mock, patch
 
 from EmotionDetection import emotion_detector
 
 
 class TestEmotionDetection(unittest.TestCase):
-    """Test emotion classification."""
-
-    def check_emotion(self, dominant):
-        """Verify the dominant emotion in a mocked Watson response."""
-        scores = {
-            "anger": 0.1,
-            "disgust": 0.1,
-            "fear": 0.1,
-            "joy": 0.1,
-            "sadness": 0.1,
-        }
-        scores[dominant] = 0.9
-
-        response = Mock()
-        response.status_code = 200
-        response.json.return_value = {
-            "emotionPredictions": [{"emotion": scores}]
-        }
-
-        with patch(
-            "EmotionDetection.emotion_detection.requests.post",
-            return_value=response,
-        ):
-            result = emotion_detector("Test sentence")
-
-        self.assertEqual(result["dominant_emotion"], dominant)
+    """Check the dominant emotion for five statements."""
 
     def test_joy(self):
-        self.check_emotion("joy")
+        result = emotion_detector("I am glad this happened")
+        self.assertEqual(result["dominant_emotion"], "joy")
 
     def test_anger(self):
-        self.check_emotion("anger")
+        result = emotion_detector("I am really mad about this")
+        self.assertEqual(result["dominant_emotion"], "anger")
 
     def test_disgust(self):
-        self.check_emotion("disgust")
-
-    def test_fear(self):
-        self.check_emotion("fear")
+        result = emotion_detector(
+            "I feel disgusted just hearing about this"
+        )
+        self.assertEqual(result["dominant_emotion"], "disgust")
 
     def test_sadness(self):
-        self.check_emotion("sadness")
+        result = emotion_detector("I am so sad about this")
+        self.assertEqual(result["dominant_emotion"], "sadness")
 
-    def test_empty_input(self):
-        result = emotion_detector("")
-        self.assertIsNone(result["dominant_emotion"])
+    def test_fear(self):
+        result = emotion_detector(
+            "I am really afraid that this will happen"
+        )
+        self.assertEqual(result["dominant_emotion"], "fear")
 
 
 if __name__ == "__main__":

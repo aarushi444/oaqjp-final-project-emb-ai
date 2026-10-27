@@ -28,8 +28,8 @@ def detect_emotion():
         f"'anger': {result['anger']}, "
         f"'disgust': {result['disgust']}, "
         f"'fear': {result['fear']}, "
-        f"'joy': {result['joy']}, "
-        f"'sadness': {result['sadness']}. "
+        f"'joy': {result['joy']} and "
+        f"'sadness': {result['sadness']}. "       
         f"The dominant emotion is {result['dominant_emotion']}."
     )
 
