@@ -1,4 +1,4 @@
-# Final project
+# Final Project
 
 AI-Based Emotion Detection Web Application using IBM Watson NLP and Flask.
 
